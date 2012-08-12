@@ -1,0 +1,243 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Convolved.Threading.Timeouts</name>
+    </assembly>
+    <members>
+        <member name="T:Convolved.Threading.Timeouts.TimerActivatedTimeout">
+            <summary>
+            Provides an abstract base class for <see cref="T:Convolved.Threading.Timeouts.Timeout"/> implementations that utilize
+            a single <see cref="P:Convolved.Threading.Timeouts.TimerActivatedTimeout.Timer"/> instance as a trigger.
+            </summary>
+            <remarks>
+            This class handles all of the initialization, disposal, and event handling around the
+            <see cref="P:Convolved.Threading.Timeouts.TimerActivatedTimeout.Timer"/> object. In most cases, a derived class only needs to implement the
+            <see cref="M:Convolved.Threading.Timeouts.Timeout.Start"/> method and optionally override the <see cref="M:Convolved.Threading.Timeouts.Timeout.Stop"/>
+            method.
+            </remarks>
+        </member>
+        <member name="T:Convolved.Threading.Timeouts.Timeout">
+            <summary>
+            Represents an abstract timeout which supports starting, stopping, and raising an elapsed
+            event, and delegates the actual timing to a derived class.
+            </summary>
+        </member>
+        <member name="T:Convolved.Threading.Timeouts.ITimeout">
+            <summary>
+            Provides functionality for triggering an event after a predetermined time or set of
+            conditions.
+            </summary>
+        </member>
+        <member name="M:Convolved.Threading.Timeouts.ITimeout.Start">
+            <summary>
+            Starts the timeout.
+            </summary>
+        </member>
+        <member name="M:Convolved.Threading.Timeouts.ITimeout.Stop">
+            <summary>
+            Stops the timeout, preventing the <see cref="E:Convolved.Threading.Timeouts.ITimeout.Elapsed"/> event from being raised until
+            the timeout is started again.
+            </summary>
+        </member>
+        <member name="E:Convolved.Threading.Timeouts.ITimeout.Elapsed">
+            <summary>
+            Occurs when the timeout has elapsed.
+            </summary>
+        </member>
+        <member name="M:Convolved.Threading.Timeouts.Timeout.Start">
+            <inheritdoc />
+        </member>
+        <member name="M:Convolved.Threading.Timeouts.Timeout.Stop">
+            <inheritdoc />
+        </member>
+        <member name="M:Convolved.Threading.Timeouts.Timeout.OnElapsed(Convolved.Threading.Timeouts.ElapsedEventArgs)">
+            <summary>
+            Raises the <see cref="E:Convolved.Threading.Timeouts.Timeout.Elapsed"/> event when the timeout has elapsed.
+            </summary>
+            <param name="e">A <see cref="T:Convolved.Threading.Timeouts.ElapsedEventArgs"/> that contains the event data.</param>
+        </member>
+        <member name="M:Convolved.Threading.Timeouts.Timeout.RaiseElapsed(System.Object)">
+            <summary>
+            Raises the <see cref="E:Convolved.Threading.Timeouts.Timeout.Elapsed"/> event with the specified state.
+            </summary>
+            <param name="state">The state object to provide for
+            <see cref="P:Convolved.Threading.Timeouts.ElapsedEventArgs.State"/>.</param>
+        </member>
+        <member name="M:Convolved.Threading.Timeouts.Timeout.Dispose">
+            <inheritdoc />
+        </member>
+        <member name="M:Convolved.Threading.Timeouts.Timeout.Dispose(System.Boolean)">
+            <summary>
+            Disposes of the resources used by the <see cref="T:Convolved.Threading.Timeouts.SlidingTimeout"/>.
+            </summary>
+            <param name="disposing"><c>true</c> to release both managed and unmanaged resources;
+            <c>false</c> to release only unmanaged resources.</param>
+        </member>
+        <member name="M:Convolved.Threading.Timeouts.Timeout.Finalize">
+            <summary>
+            Finalizes the <see cref="T:Convolved.Threading.Timeouts.Timeout"/> instance.
+            </summary>
+        </member>
+        <member name="E:Convolved.Threading.Timeouts.Timeout.Elapsed">
+            <inheritdoc />
+        </member>
+        <member name="M:Convolved.Threading.Timeouts.TimerActivatedTimeout.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Convolved.Threading.Timeouts.TimerActivatedTimeout"/> class.
+            </summary>
+        </member>
+        <member name="M:Convolved.Threading.Timeouts.TimerActivatedTimeout.#ctor(System.Object)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Convolved.Threading.Timeouts.TimerActivatedTimeout"/> class with the
+            specified timeout state.
+            </summary>
+            <param name="state">A state object, which will be passed in the
+            <see cref="T:Convolved.Threading.Timeouts.ElapsedEventArgs"/> object when the <see cref="E:Convolved.Threading.Timeouts.Timeout.Elapsed"/> event
+            occurs.</param>
+        </member>
+        <member name="M:Convolved.Threading.Timeouts.TimerActivatedTimeout.Stop">
+            <inheritdoc />
+        </member>
+        <member name="M:Convolved.Threading.Timeouts.TimerActivatedTimeout.Dispose(System.Boolean)">
+            <inheritdoc />
+        </member>
+        <member name="M:Convolved.Threading.Timeouts.TimerActivatedTimeout.TimerCallback(System.Object)">
+            <summary>
+            Executes when the internal <see cref="P:Convolved.Threading.Timeouts.TimerActivatedTimeout.Timer"/> elapses.
+            </summary>
+            <param name="state">The state object with which the <see cref="T:Convolved.Threading.Timeouts.SlidingTimeout"/>
+            instance was initialized.</param>
+        </member>
+        <member name="P:Convolved.Threading.Timeouts.TimerActivatedTimeout.Timer">
+            <summary>
+            Gets the active timer instance.
+            </summary>
+        </member>
+        <member name="T:Convolved.Threading.Timeouts.ElapsedEventArgs">
+            <summary>
+            Provides data for the <see cref="E:Convolved.Threading.Timeouts.Timeout.Elapsed"/> event.
+            </summary>
+        </member>
+        <member name="M:Convolved.Threading.Timeouts.ElapsedEventArgs.#ctor(System.Object)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Convolved.Threading.Timeouts.ElapsedEventArgs"/> class with the
+            specified state object.
+            </summary>
+            <param name="state">The state object associated with the raising
+            <see cref="T:Convolved.Threading.Timeouts.Timeout"/>.</param>
+        </member>
+        <member name="P:Convolved.Threading.Timeouts.ElapsedEventArgs.State">
+            <summary>
+            Gets the state object associated with the raising <see cref="T:Convolved.Threading.Timeouts.Timeout"/>.
+            </summary>
+        </member>
+        <member name="T:Convolved.Threading.Timeouts.SlidingOrFixedTimeout">
+            <summary>
+            Implements a hybrid sliding/fixed timeout, which restarts its countdown each time the
+            <see cref="M:Convolved.Threading.Timeouts.SlidingOrFixedTimeout.Start"/> method is called, and also elapses after a fixed timeout if the sliding
+            timeout has not yet been triggered.
+            </summary>
+            <remarks>
+            This type of timeout is primarily useful in situations where a sliding timeout would
+            improve transaction performance but an SLA or other constraint specifies a maximum amount
+            of time allowed before the result of a transaction is reflected.
+            </remarks>
+        </member>
+        <member name="M:Convolved.Threading.Timeouts.SlidingOrFixedTimeout.#ctor(System.TimeSpan,System.TimeSpan)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Convolved.Threading.Timeouts.FixedTimeout"/> class with the specified
+            fixed and sliding timeout intervals.
+            </summary>
+            <param name="fixedInterval">The fixed timeout interval, which begins when the
+            <see cref="M:Convolved.Threading.Timeouts.SlidingOrFixedTimeout.Start"/> method is called.</param>
+            <param name="slidingInterval">The sliding timeout interval, which is reset on any
+            successive calls to the <see cref="M:Convolved.Threading.Timeouts.SlidingOrFixedTimeout.Start"/> method.</param>
+        </member>
+        <member name="M:Convolved.Threading.Timeouts.SlidingOrFixedTimeout.#ctor(System.TimeSpan,System.TimeSpan,System.Object)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Convolved.Threading.Timeouts.FixedTimeout"/> class with the specified
+            fixed timeout interval, sliding timeout interval, and state.
+            </summary>
+            <param name="fixedInterval">The fixed timeout interval, which begins when the
+            <see cref="M:Convolved.Threading.Timeouts.SlidingOrFixedTimeout.Start"/> method is called.</param>
+            <param name="slidingInterval">The sliding timeout interval, which is reset on any
+            successive calls to the <see cref="M:Convolved.Threading.Timeouts.SlidingOrFixedTimeout.Start"/> method.</param>
+            <param name="state">A state object, which will be passed in the
+            <see cref="T:Convolved.Threading.Timeouts.ElapsedEventArgs"/> object when the <see cref="E:Convolved.Threading.Timeouts.Timeout.Elapsed"/> event
+            occurs.</param>
+        </member>
+        <member name="M:Convolved.Threading.Timeouts.SlidingOrFixedTimeout.Start">
+            <inheritdoc />
+        </member>
+        <member name="M:Convolved.Threading.Timeouts.SlidingOrFixedTimeout.Stop">
+            <inheritdoc />
+        </member>
+        <member name="M:Convolved.Threading.Timeouts.SlidingOrFixedTimeout.OnElapsed(Convolved.Threading.Timeouts.ElapsedEventArgs)">
+            <inheritdoc />
+        </member>
+        <member name="T:Convolved.Threading.Timeouts.FixedTimeout">
+            <summary>
+            Implements a fixed timeout, which elapses after a specific amount of time has passed since
+            the timeout has started.
+            </summary>
+        </member>
+        <member name="M:Convolved.Threading.Timeouts.FixedTimeout.#ctor(System.TimeSpan)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Convolved.Threading.Timeouts.FixedTimeout"/> class with the specified
+            fixed and sliding timeout intervals.
+            </summary>
+            <param name="interval">The timeout interval, which begins when the <see cref="M:Convolved.Threading.Timeouts.FixedTimeout.Start"/>
+            method is called.</param>
+        </member>
+        <member name="M:Convolved.Threading.Timeouts.FixedTimeout.#ctor(System.TimeSpan,System.Object)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Convolved.Threading.Timeouts.FixedTimeout"/> class with the specified
+            timeout interval and state.
+            </summary>
+            <param name="interval">The timeout interval, which begins when the <see cref="M:Convolved.Threading.Timeouts.FixedTimeout.Start"/>
+            method is called.</param>
+            <param name="state">A state object, which will be passed in the
+            <see cref="T:Convolved.Threading.Timeouts.ElapsedEventArgs"/> object when the <see cref="E:Convolved.Threading.Timeouts.Timeout.Elapsed"/> event
+            occurs.</param>
+        </member>
+        <member name="M:Convolved.Threading.Timeouts.FixedTimeout.Start">
+            <inheritdoc />
+        </member>
+        <member name="M:Convolved.Threading.Timeouts.FixedTimeout.Stop">
+            <inheritdoc />
+        </member>
+        <member name="M:Convolved.Threading.Timeouts.FixedTimeout.OnElapsed(Convolved.Threading.Timeouts.ElapsedEventArgs)">
+            <inheritdoc />
+        </member>
+        <member name="T:Convolved.Threading.Timeouts.SlidingTimeout">
+            <summary>
+            Implements a <see cref="T:Convolved.Threading.Timeouts.Timeout"/> which restarts its countdown each time the
+            <see cref="M:Convolved.Threading.Timeouts.SlidingTimeout.Start"/> method is called.
+            </summary>
+        </member>
+        <member name="M:Convolved.Threading.Timeouts.SlidingTimeout.#ctor(System.TimeSpan)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Convolved.Threading.Timeouts.SlidingTimeout"/> class with the specified
+            sliding timeout interval.
+            </summary>
+            <param name="interval">The timeout interval, which is reset on any successive calls to
+            the <see cref="M:Convolved.Threading.Timeouts.SlidingTimeout.Start"/> method.</param>
+        </member>
+        <member name="M:Convolved.Threading.Timeouts.SlidingTimeout.#ctor(System.TimeSpan,System.Object)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Convolved.Threading.Timeouts.SlidingTimeout"/> class with the specified
+            sliding timeout interval and state.
+            </summary>
+            <param name="interval">The timeout interval, which is reset on any successive calls to
+            the <see cref="M:Convolved.Threading.Timeouts.SlidingTimeout.Start"/> method.</param>
+            <param name="state">A state object, which will be passed in the
+            <see cref="T:Convolved.Threading.Timeouts.ElapsedEventArgs"/> object when the <see cref="E:Convolved.Threading.Timeouts.Timeout.Elapsed"/> event
+            occurs.</param>
+        </member>
+        <member name="M:Convolved.Threading.Timeouts.SlidingTimeout.Start">
+            <inheritdoc/>
+            <remarks>Successive calls to the <see cref="M:Convolved.Threading.Timeouts.SlidingTimeout.Start"/> method will restart the countdown
+            if the timeout has not already elapsed.</remarks>
+        </member>
+    </members>
+</doc>

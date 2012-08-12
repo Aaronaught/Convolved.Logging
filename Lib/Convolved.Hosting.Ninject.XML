@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Convolved.Hosting.Ninject</name>
+    </assembly>
+    <members>
+        <member name="T:Convolved.Hosting.Ninject.ServiceEnvironmentHost">
+            <summary>
+            Implements a runnable Windows host which can run as either a Windows Service or Console
+            application, using Ninject for dependency injection.
+            </summary>
+        </member>
+        <member name="M:Convolved.Hosting.Ninject.ServiceEnvironmentHost.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Convolved.Hosting.Ninject.ServiceEnvironmentHost"/> class using a standard kernel.
+            </summary>
+        </member>
+        <member name="M:Convolved.Hosting.Ninject.ServiceEnvironmentHost.#ctor(Ninject.IKernel)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Convolved.Hosting.Ninject.ServiceEnvironmentHost"/> class using the specified kernel.
+            </summary>
+            <param name="kernel">An existing Ninject <see cref="T:Ninject.IKernel"/> instance.</param>
+        </member>
+        <member name="M:Convolved.Hosting.Ninject.ServiceEnvironmentHost.InitializeWith(System.Action{Ninject.IKernel})">
+            <summary>
+            Register an action to be run on initialization, before the service host is started.
+            </summary>
+            <param name="action">The action to run.</param>
+            <returns>The current <see cref="T:Convolved.Hosting.Ninject.ServiceEnvironmentHost"/> instance.</returns>
+        </member>
+        <member name="M:Convolved.Hosting.Ninject.ServiceEnvironmentHost.Modules(Ninject.Modules.NinjectModule[])">
+            <summary>
+            Loads additional modules into the <see cref="P:Convolved.Hosting.Ninject.ServiceEnvironmentHost.Kernel"/>.
+            </summary>
+            <param name="modules">An array of <see cref="T:Ninject.Modules.NinjectModule"/> instances to 
+            load.</param>
+            <returns>The current <see cref="T:Convolved.Hosting.Ninject.ServiceEnvironmentHost"/> instance.</returns>
+        </member>
+        <member name="M:Convolved.Hosting.Ninject.ServiceEnvironmentHost.Initialize">
+            <inheritdoc />
+        </member>
+        <member name="P:Convolved.Hosting.Ninject.ServiceEnvironmentHost.Kernel">
+            <summary>
+            Gets the Ninject kernel ued to resolve dependencies.
+            </summary>
+        </member>
+        <member name="P:Convolved.Hosting.Ninject.ServiceEnvironmentHost.Self">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>

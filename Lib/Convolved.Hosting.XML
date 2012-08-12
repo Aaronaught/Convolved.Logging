@@ -1,0 +1,338 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Convolved.Hosting</name>
+    </assembly>
+    <members>
+        <member name="T:Convolved.Hosting.RestartOnFaultInterceptor`1">
+            <summary>
+            Implements an interceptor which recreates the underlying communication object before a
+            method call if the communication object is faulted.
+            </summary>
+            <typeparam name="TService">The service type or interface.</typeparam>
+        </member>
+        <member name="M:Convolved.Hosting.RestartOnFaultInterceptor`1.#ctor(System.Func{`0})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Convolved.Hosting.RestartOnFaultInterceptor`1"/>
+            using the specified factory method.
+            </summary>
+            <param name="factory">A delegate method for creating new instances of the
+            <typeparamref name="TService"/> type.</param>
+        </member>
+        <member name="M:Convolved.Hosting.RestartOnFaultInterceptor`1.Intercept(Castle.DynamicProxy.IInvocation)">
+            <inheritdoc />
+        </member>
+        <member name="T:Convolved.Hosting.IServiceRegistry">
+            <summary>
+            Provides functionality for registering WCF services on behalf of a
+            <see cref="T:Convolved.Hosting.ServiceEnvironmentHost"/>.
+            </summary>
+        </member>
+        <member name="M:Convolved.Hosting.IServiceRegistry.Add``1">
+            <summary>
+            Registers a service using the default instancing mode.
+            </summary>
+            <typeparam name="TService">The type of service to host.</typeparam>
+        </member>
+        <member name="M:Convolved.Hosting.IServiceRegistry.Add``1(System.ServiceModel.InstanceContextMode)">
+            <summary>
+            Registers a service using the specified instancing mode.
+            </summary>
+            <typeparam name="TService">The type of service to host.</typeparam>
+            <param name="mode">The instancing mode for the service.</param>
+        </member>
+        <member name="M:Convolved.Hosting.IServiceRegistry.CreateServiceEnvironment">
+            <summary>
+            Initializes a <see cref="T:Convolved.Hosting.ServiceEnvironment"/> instance with all services registered
+            via the <see cref="M:Convolved.Hosting.IServiceRegistry.Add``1"/> method/overloads.
+            </summary>
+            <returns>A new <see cref="T:Convolved.Hosting.ServiceEnvironment"/> configured to run all registered
+            services.</returns>
+        </member>
+        <member name="T:Convolved.Hosting.LoggingErrorHandler">
+            <summary>
+            Implements a WCF error handler which uses log4net to log exceptions as fatal errors.
+            </summary>
+        </member>
+        <member name="M:Convolved.Hosting.LoggingErrorHandler.HandleError(System.Exception)">
+            <inheritdoc />
+        </member>
+        <member name="M:Convolved.Hosting.LoggingErrorHandler.ProvideFault(System.Exception,System.ServiceModel.Channels.MessageVersion,System.ServiceModel.Channels.Message@)">
+            <inheritdoc />
+        </member>
+        <member name="M:Convolved.Hosting.LoggingErrorHandler.AddBindingParameters(System.ServiceModel.Description.ServiceDescription,System.ServiceModel.ServiceHostBase,System.Collections.ObjectModel.Collection{System.ServiceModel.Description.ServiceEndpoint},System.ServiceModel.Channels.BindingParameterCollection)">
+            <inheritdoc />
+        </member>
+        <member name="M:Convolved.Hosting.LoggingErrorHandler.ApplyDispatchBehavior(System.ServiceModel.Description.ServiceDescription,System.ServiceModel.ServiceHostBase)">
+            <inheritdoc />
+        </member>
+        <member name="M:Convolved.Hosting.LoggingErrorHandler.Validate(System.ServiceModel.Description.ServiceDescription,System.ServiceModel.ServiceHostBase)">
+            <inheritdoc />
+        </member>
+        <member name="T:Convolved.Hosting.ServiceEnvironmentHost`1">
+            <summary>
+            Provides a base class for a <see cref="T:Convolved.Hosting.ServiceEnvironment"/> host, which can run as either
+            a Windows Service or Console application.
+            </summary>
+            <typeparam name="T">The concrete type of the environment host.</typeparam>
+        </member>
+        <member name="T:Convolved.Hosting.IFluentSyntax`1">
+            <summary>
+            Represents a self-referencing interface.
+            </summary>
+            <typeparam name="T">The concrete implementation type.</typeparam>
+        </member>
+        <member name="P:Convolved.Hosting.IFluentSyntax`1.Self">
+            <summary>
+            Gets the concrete implementation of the interface.
+            </summary>
+        </member>
+        <member name="M:Convolved.Hosting.ServiceEnvironmentHost`1.#ctor(Convolved.Hosting.IServiceRegistry)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Convolved.Hosting.ServiceEnvironmentHost`1"/> class using
+            the specified service registry.
+            </summary>
+            <param name="serviceRegistry">The service registry, used to register and create
+            individual service instances.</param>
+        </member>
+        <member name="M:Convolved.Hosting.ServiceEnvironmentHost`1.Name(System.String)">
+            <summary>
+            Changes the service name used for the Windows service controller.
+            </summary>
+            <param name="name">The <see cref="P:System.ServiceProcess.ServiceBase.ServiceName"/> that the created
+            <see cref="T:System.ServiceProcess.ServiceBase"/> will have in a Windows service environment.</param>
+            <returns>The current <typeparamref name="T"/> host instance.</returns>
+        </member>
+        <member name="M:Convolved.Hosting.ServiceEnvironmentHost`1.Service``1">
+            <inheritdoc cref="M:Convolved.Hosting.IServiceRegistry.Add``1"/>
+            <returns>The current <typeparamref name="T"/> host instance.</returns>
+        </member>
+        <member name="M:Convolved.Hosting.ServiceEnvironmentHost`1.Service``1(System.ServiceModel.InstanceContextMode)">
+            <inheritdoc cref="M:Convolved.Hosting.IServiceRegistry.Add``1(System.ServiceModel.InstanceContextMode)"/>
+            <returns>The current <typeparamref name="T"/> host instance.</returns>
+        </member>
+        <member name="M:Convolved.Hosting.ServiceEnvironmentHost`1.RunAsConsoleApplication">
+            <summary>
+            Starts a service environment running in the active console window.
+            </summary>
+        </member>
+        <member name="M:Convolved.Hosting.ServiceEnvironmentHost`1.RunAsWindowsService(System.ServiceProcess.ServiceBase[])">
+            <summary>
+            Starts a service environment running as a Windows service.
+            </summary>
+            <param name="additionalServicesToRun">An array of additional services to run in the
+            service process.</param>
+        </member>
+        <member name="M:Convolved.Hosting.ServiceEnvironmentHost`1.RunWithCommandLineArgs(System.String[])">
+            <summary>
+            Configures and runs an environment based on a set of command-line arguments.
+            </summary>
+            <param name="args">The command-line arguments.</param>
+        </member>
+        <member name="M:Convolved.Hosting.ServiceEnvironmentHost`1.Initialize">
+            <summary>
+            Executes any required initialization actions before creating the service environment.
+            </summary>
+        </member>
+        <member name="P:Convolved.Hosting.ServiceEnvironmentHost`1.Self">
+            <inheritdoc />
+        </member>
+        <member name="T:Convolved.Hosting.GenericWcfService">
+            <summary>
+            Implements a generic Windows service which runs a <see cref="T:Convolved.Hosting.ServiceEnvironment"/>.
+            </summary>
+        </member>
+        <member name="M:Convolved.Hosting.GenericWcfService.#ctor(Convolved.Hosting.ServiceEnvironment)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Convolved.Hosting.GenericWcfService"/> class using the
+            specified service environment.
+            </summary>
+            <param name="environment">A <see cref="T:Convolved.Hosting.ServiceEnvironment"/> comprising the WCF
+            services that are part of the application.</param>
+        </member>
+        <member name="M:Convolved.Hosting.GenericWcfService.OnStart(System.String[])">
+            <inheritdoc />
+        </member>
+        <member name="M:Convolved.Hosting.GenericWcfService.OnStop">
+            <inheritdoc />
+        </member>
+        <member name="F:Convolved.Hosting.GenericWcfService.components">
+            <summary> 
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Convolved.Hosting.GenericWcfService.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:Convolved.Hosting.GenericWcfService.InitializeComponent">
+            <summary> 
+            Required method for Designer support - do not modify 
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:Convolved.Hosting.ServiceEnvironment">
+            <summary>
+            Encapsulates an environment which hosts several restartable services.
+            </summary>
+        </member>
+        <member name="M:Convolved.Hosting.ServiceEnvironment.#ctor(Convolved.Hosting.IServiceHostFactory[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:Convolved.Hosting.ServiceEnvironment"/> class with
+            the specified service host factories.
+            </summary>
+            <param name="factories">An array of factories each responsible for instantiating a
+            <see cref="T:System.ServiceModel.ServiceHost"/> instance for a specific service type.</param>
+        </member>
+        <member name="M:Convolved.Hosting.ServiceEnvironment.Dispose">
+            <inheritdoc />
+        </member>
+        <member name="M:Convolved.Hosting.ServiceEnvironment.Start">
+            <summary>
+            Starts all of the services in the environment.
+            </summary>
+        </member>
+        <member name="M:Convolved.Hosting.ServiceEnvironment.Stop">
+            <summary>
+            Stops all of the services in the environment.
+            </summary>
+        </member>
+        <member name="T:Convolved.Hosting.ServiceConsole">
+            <summary>
+            Runs a <see cref="T:Convolved.Hosting.ServiceEnvironment"/> in the active <see cref="T:System.Console"/>, providing
+            support for safe shutdown via Ctrl-C.
+            </summary>
+        </member>
+        <member name="M:Convolved.Hosting.ServiceConsole.Run(Convolved.Hosting.IServiceHostFactory[])">
+            <summary>
+            Starts a service console using a <see cref="T:Convolved.Hosting.ServiceEnvironment"/> created from the
+            specified <paramref name="factories"/>.
+            </summary>
+            <param name="factories">An array of factories each responsible for instantiating a
+            <see cref="T:System.ServiceModel.ServiceHost"/> instance for a specific service 
+            type.</param>
+        </member>
+        <member name="M:Convolved.Hosting.ServiceConsole.Run(Convolved.Hosting.ServiceEnvironment)">
+            <summary>
+            Starts a service console using the specified environment.
+            </summary>
+            <param name="environment">A <see cref="T:Convolved.Hosting.ServiceEnvironment"/> initialized with the
+            <see cref="T:Convolved.Hosting.IServiceHostFactory"/> instances responsible for instantiating individual
+            service hosts.</param>
+        </member>
+        <member name="T:Convolved.Hosting.ErrorLoggingElement">
+            <summary>
+            Provides a configuration element for the <see cref="T:Convolved.Hosting.LoggingErrorHandler"/>.
+            </summary>
+        </member>
+        <member name="M:Convolved.Hosting.ErrorLoggingElement.CreateBehavior">
+            <inheritdoc />
+        </member>
+        <member name="P:Convolved.Hosting.ErrorLoggingElement.BehaviorType">
+            <inheritdoc />
+        </member>
+        <member name="T:Convolved.Hosting.AnonymousServiceHostFactory">
+            <summary>
+            Implements a service host factory based on a delegate function.
+            </summary>
+        </member>
+        <member name="T:Convolved.Hosting.IServiceHostFactory">
+            <summary>
+            Provides a method to create WCF service hosts.
+            </summary>
+        </member>
+        <member name="M:Convolved.Hosting.IServiceHostFactory.CreateServiceHost">
+            <summary>
+            Creates a new service host.
+            </summary>
+            <returns>A new <see cref="T:System.ServiceModel.ServiceHost"/>.</returns>
+        </member>
+        <member name="M:Convolved.Hosting.AnonymousServiceHostFactory.#ctor(System.Func{System.ServiceModel.ServiceHost})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Convolved.Hosting.AnonymousServiceHostFactory"/> class using
+            the specified factory method.
+            </summary>
+            <param name="factory">A delegate method for creating new <see cref="T:System.ServiceModel.ServiceHost"/> 
+            instances.</param>
+        </member>
+        <member name="M:Convolved.Hosting.AnonymousServiceHostFactory.CreateServiceHost">
+            <inheritdoc />
+        </member>
+        <member name="T:Convolved.Hosting.AutoRestartClient">
+            <summary>
+            Provides a method to create a WCF client which restarts after a fault, using an interface
+            proxy and a <see cref="T:Convolved.Hosting.RestartOnFaultInterceptor`1"/>.
+            </summary>
+        </member>
+        <member name="M:Convolved.Hosting.AutoRestartClient.Create``1(System.Func{``0})">
+            <summary>
+            Creates a service proxy which automatically recreates faulted channels.
+            </summary>
+            <typeparam name="TService">The service type.</typeparam>
+            <param name="factory">A delegate for creating the wrapped instances of
+            <typeparamref name="TService"/>.</param>
+            <returns>A new <typeparamref name="TService"/> wrapper object which will continue to
+            handle invocations after a fault.</returns>
+        </member>
+        <member name="T:Convolved.Hosting.ServiceHostContainer">
+            <summary>
+            Encapsulates a service host which is automatically restarted if the service faults, up to
+            a specified number of retries.
+            </summary>
+            <remarks>The retry counter will be reset if the host is started successfully.</remarks>
+        </member>
+        <member name="M:Convolved.Hosting.ServiceHostContainer.#ctor(Convolved.Hosting.IServiceHostFactory,System.UInt32,System.UInt32,System.Double,System.UInt32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Convolved.Hosting.ServiceHostContainer"/> using the
+            specified factory and retry settings.
+            </summary>
+            <param name="factory">The factory responsible for creating new service hosts.</param>
+            <param name="maxRetries">The maximum number of retries, after which the service will
+            no longer attempt to restart.</param>
+            <param name="initialRetryTime">The amount of time, in milliseconds, to wait before
+            first attempting to restart the service.</param>
+            <param name="retryTimeMultiplier">The amount by which to multiply the previous retry
+            time to get the next retry time; a value greater than 1 indicates geometrically
+            increasing time between successive attempts to restart the service.</param>
+            <param name="maxRetryTime">The maximum time the container should wait before scheduling
+            another restart attempt. This overrides the <paramref name="retryTimeMultiplier"/> if
+            the new retry time would exceed the max time.</param>
+        </member>
+        <member name="M:Convolved.Hosting.ServiceHostContainer.#ctor(Convolved.Hosting.IServiceHostFactory,System.Collections.Generic.IEnumerable{System.TimeSpan})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Convolved.Hosting.ServiceHostContainer"/> using the
+            specified factory and retry settings.
+            </summary>
+            <param name="factory">The factory responsible for creating new service hosts.</param>
+            <param name="retryTimes">A sequence of <see cref="T:System.TimeSpan"/> instances representing
+            the specific times to wait between successive attempts to restart the service.</param>
+        </member>
+        <member name="M:Convolved.Hosting.ServiceHostContainer.Run">
+            <summary>
+            Starts up a service host if there is not one already running.
+            </summary>
+        </member>
+        <member name="M:Convolved.Hosting.ServiceHostContainer.Dispose">
+            <summary>
+            Shuts down the service host.
+            </summary>
+        </member>
+        <member name="T:Convolved.Hosting.ServiceEnvironmentHost">
+            <summary>
+            Provides a minimal implementation of the <see cref="T:Convolved.Hosting.ServiceEnvironmentHost`1"/> class.
+            </summary>
+        </member>
+        <member name="M:Convolved.Hosting.ServiceEnvironmentHost.#ctor(Convolved.Hosting.IServiceRegistry)">
+            <inheritdoc/>
+            <summary>
+            Initializes a new instance of the <see cref="T:Convolved.Hosting.ServiceEnvironmentHost`1"/> class using
+            the specified service registry.
+            </summary>
+        </member>
+        <member name="P:Convolved.Hosting.ServiceEnvironmentHost.Self">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>
